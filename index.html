@@ -474,7 +474,6 @@
 <div class="carousel-container">
   <div class="carousel">
     <div class="slides" id="slides">
-    
       <div class="slide">
         <img class="carousel-img" src="imgCarrusel/EsscenceBienvenida1.png" alt="EsscenceBienvenida">
       </div>
@@ -498,7 +497,7 @@
 <section id="nuevo">
   <div class="section-title">NUEVO</div>
   <div class="grid">
-    <div class="card" data-product="ESSENCE DROP 01" data-description="Edición inicial" data-price="$299 MXN" data-available="5">
+    <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$859 MXN" data-available="5">
       <div class="img-box" style="background-image: url('imgCarrusel/DropsWeb1.png')"></div>
       <h4>PACK ESSENCE DROP 01</h4>
       <p>Edición inicial</p>
@@ -580,7 +579,6 @@
 </footer>
 
 <script>
-  
   // Variables globales para el carrusel
   let index = 0;
   const slides = document.getElementById("slides");
@@ -669,10 +667,12 @@
   let currentProduct = '';
   let currentPrice = '';
   let currentAvailable = 0;
+  let currentImageUrl = '';
   
-  // Número de WhatsApp (reemplaza con tu número)
-  const whatsappNumber = '522481688043'; // Formato internacional sin +, espacios o guiones
-  
+  // Configuración base
+  const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
+  const whatsappNumber = '522481688043'; // Tu número de WhatsApp
+
   // Abrir modal al hacer clic en una tarjeta de producto
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', function() {
@@ -680,7 +680,15 @@
       const description = this.getAttribute('data-description');
       const price = this.getAttribute('data-price');
       const available = parseInt(this.getAttribute('data-available'));
-      const imageUrl = this.querySelector('.img-box').style.backgroundImage.slice(5, -2);
+      
+      // Obtener la ruta de la imagen del fondo
+      const imagePath = this.querySelector('.img-box').style.backgroundImage.slice(5, -2);
+      
+      // Convertir a URL absoluta si es relativa
+      let imageUrl = imagePath;
+      if (!imagePath.startsWith('http')) {
+        imageUrl = baseUrl + imagePath;
+      }
       
       // Actualizar modal con la información del producto
       modalImage.style.backgroundImage = `url('${imageUrl}')`;
@@ -714,6 +722,7 @@
       currentProduct = product;
       currentPrice = price;
       currentAvailable = available;
+      currentImageUrl = imageUrl;
       
       // Mostrar modal
       productModal.classList.add('active');
@@ -732,36 +741,8 @@
     }
   });
 
-// Configuración base
-const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
-const whatsappNumber = '521234567890'; // Reemplaza con tu número
-
-// Variable para guardar la URL de la imagen actual
-let currentImageUrl = '';
-
-// Al hacer clic en una tarjeta
-document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', function() {
-        // ... (otras propiedades)
-
-        // Obtener la ruta de la imagen del atributo data-image
-        const imagePath = this.getAttribute('data-image');
-        let imageUrl = imagePath;
-
-        // Si la ruta no es absoluta, hacerla absoluta
-        if (!imagePath.startsWith('http')) {
-            imageUrl = baseUrl + imagePath;
-        }
-
-        // Guardar la URL de la imagen actual
-        currentImageUrl = imageUrl;
-
-        // ... (establecer el modal)
-    });
-});
-
-// Botón de WhatsApp para comprar
-btnWhatsApp.addEventListener('click', function() {
+  // Botón de WhatsApp para comprar
+  btnWhatsApp.addEventListener('click', function() {
     const message = `🛍️ *SOLICITUD DE COMPRA - ESSCENCE* 🛍️
 
 ✨ *Producto:* ${currentProduct}
@@ -778,10 +759,10 @@ btnWhatsApp.addEventListener('click', function() {
   
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
-});
+  });
 
-// Botón de WhatsApp para apartar
-btnReserve.addEventListener('click', function() {
+  // Botón de WhatsApp para apartar
+  btnReserve.addEventListener('click', function() {
     const message = `📋 *SOLICITUD DE APARTADO - ESSCENCE* 📋
 
 ✨ *Producto:* ${currentProduct}
@@ -798,14 +779,10 @@ Agradezco su atención y quedo pendiente de instrucciones. 🙏`;
   
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
-});
+  });
 </script>
 
 </body>
-
 </html>
-
-
-
 
 
