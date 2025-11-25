@@ -496,7 +496,7 @@
 </div>
 
 <section id="nuevo">
-  <div class="section-title">sNUEVO</div>
+  <div class="section-title">NUEVO</div>
   <div class="grid">
     <div class="card" data-product="ESSENCE DROP 01" data-description="Edición inicial" data-price="$299 MXN" data-available="5">
       <div class="img-box" style="background-image: url('imgCarrusel/DropsWeb1.png')"></div>
@@ -731,46 +731,80 @@
       productModal.classList.remove('active');
     }
   });
- // Botón de WhatsApp para comprar
+
+// Configuración base
+const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
+const whatsappNumber = '521234567890'; // Reemplaza con tu número
+
+// Variable para guardar la URL de la imagen actual
+let currentImageUrl = '';
+
+// Al hacer clic en una tarjeta
+document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', function() {
+        // ... (otras propiedades)
+
+        // Obtener la ruta de la imagen del atributo data-image
+        const imagePath = this.getAttribute('data-image');
+        let imageUrl = imagePath;
+
+        // Si la ruta no es absoluta, hacerla absoluta
+        if (!imagePath.startsWith('http')) {
+            imageUrl = baseUrl + imagePath;
+        }
+
+        // Guardar la URL de la imagen actual
+        currentImageUrl = imageUrl;
+
+        // ... (establecer el modal)
+    });
+});
+
+// Botón de WhatsApp para comprar
 btnWhatsApp.addEventListener('click', function() {
-  const imageUrl = modalImage.style.backgroundImage.slice(5, -2);
-  const message = `¡Hola! 😊
+    const message = `🛍️ *SOLICITUD DE COMPRA - ESSCENCE* 🛍️
 
-Me interesa el siguiente producto de *ESSCENCE*:
-
-🏷️ *Producto:* ${currentProduct}
+✨ *Producto:* ${currentProduct}
+📋 *Descripción:* ${modalDescription.textContent}
 💰 *Precio:* ${currentPrice}
-📦 *Disponibles:* ${currentAvailable}
+📦 *Disponibilidad:* ${currentAvailable} unidades
 
-Me gustaría comprarlo. ¿Podrían ayudarme con mi pedido?
+¡Hola! Estoy interesado/a en comprar este producto de ESSCENCE. 
+¿Podrían proporcionarme más información sobre disponibilidad y proceso de compra?
 
-Ver imagen del producto: ${imageUrl}`;
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, 'https://esscenceshirts.github.io/CatalogoWeb/');
+📍 *Imagen del producto:* ${currentImageUrl}
+
+¡Quedo atento/a a su respuesta! 😊`;
+  
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
 });
 
 // Botón de WhatsApp para apartar
 btnReserve.addEventListener('click', function() {
-  const imageUrl = modalImage.style.backgroundImage.slice(5, -2);
-  const message = `¡Hola! 😊
+    const message = `📋 *SOLICITUD DE APARTADO - ESSCENCE* 📋
 
-Me interesa el siguiente producto de *ESSCENCE*:
-
-🏷️ *Producto:* ${currentProduct}
+✨ *Producto:* ${currentProduct}
+📋 *Descripción:* ${modalDescription.textContent}
 💰 *Precio:* ${currentPrice}
-📦 *Disponibles:* ${currentAvailable}
+📦 *Disponibilidad:* ${currentAvailable} unidades
 
-Me gustaría apartarlo. ¿Podrían ayudarme con mi pedido?
+¡Hola! Me gustaría apartar este producto de ESSCENCE.
+¿Cuál es el proceso y requisitos para apartarlo?
 
-Ver imagen del producto: ${imageUrl}`;
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-  window.open(url, '_blank');
+📍 *Imagen del producto:* ${currentImageUrl}
+
+Agradezco su atención y quedo pendiente de instrucciones. 🙏`;
+  
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
 });
 </script>
 
 </body>
 
 </html>
+
 
 
 
