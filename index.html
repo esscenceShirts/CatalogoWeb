@@ -379,7 +379,7 @@
     .availability {
       display: flex;
       align-items: center;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       font-size: clamp(13px, 2.5vw, 15px);
     }
 
@@ -398,6 +398,56 @@
 
     .availability .out-of-stock {
       background: #F44336;
+    }
+
+    /* Selector de cantidad */
+    .quantity-selector {
+      margin-bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .quantity-label {
+      font-weight: 500;
+      font-size: clamp(14px, 2.5vw, 16px);
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-btn {
+      width: 35px;
+      height: 35px;
+      border: 1px solid #ddd;
+      background: white;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .quantity-btn:hover:not(:disabled) {
+      background: #f5f5f5;
+      border-color: #ccc;
+    }
+
+    .quantity-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .quantity-display {
+      width: 50px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 16px;
     }
 
     .action-buttons {
@@ -490,6 +540,12 @@
       .btn {
         min-width: 100%;
       }
+      
+      .quantity-selector {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -571,57 +627,6 @@
         margin-bottom: 15px;
       }
     }
-        /* Selector de cantidad */
-    .quantity-selector {
-      margin-bottom: 25px;
-    }
-
-    .quantity-selector label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 500;
-      font-size: clamp(13px, 2.5vw, 15px);
-    }
-
-    .quantity-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .quantity-controls button {
-      background: #111;
-      color: white;
-      border: none;
-      width: 35px;
-      height: 35px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-    }
-
-    .quantity-controls button:hover {
-      background: #333;
-    }
-
-    .quantity-controls button:disabled {
-      background: #cccccc;
-      cursor: not-allowed;
-    }
-
-    #quantity {
-      width: 60px;
-      text-align: center;
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 16px;
-      background: #f9f9f9;
-    }
   </style>
 </head>
 <body>
@@ -642,7 +647,6 @@
     <div class="slides" id="slides">
       <div class="slide">
         <img class="carousel-img" src="imgCarrusel/EsscenceBienvenida1.png" alt="EsscenceBienvenida">
-       
       </div>
       <div class="slide">
         <img class="carousel-img" src="imgCarrusel/DropsWeb1.png" alt="Drop1Esscence">
@@ -666,15 +670,6 @@
   <div class="section-title">NUEVO</div>
   <div class="grid">
     <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5">
-          <!-- Selector de cantidad -->
-    <div class="quantity-selector">
-      <label for="quantity">Cantidad:</label>
-      <div class="quantity-controls">
-        <button type="button" id="decreaseQuantity">-</button>
-        <input type="number" id="quantity" value="1" min="1" max="10" readonly>
-        <button type="button" id="increaseQuantity">+</button>
-      </div>
-    </div>
       <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop1.png')"></div>
       <h4>PACK ESSCENCE DROP 01</h4>
       <p>Edición inicial</p>
@@ -776,6 +771,17 @@
       <div class="dot" id="availabilityDot"></div>
       <span id="availabilityText">Disponibles: <span id="availableCount">0</span></span>
     </div>
+    
+    <!-- Selector de cantidad -->
+    <div class="quantity-selector">
+      <span class="quantity-label">Cantidad:</span>
+      <div class="quantity-controls">
+        <button class="quantity-btn" id="decreaseQuantity" disabled>-</button>
+        <span class="quantity-display" id="quantityDisplay">1</span>
+        <button class="quantity-btn" id="increaseQuantity">+</button>
+      </div>
+    </div>
+    
     <div class="action-buttons">
       <button class="btn btn-whatsapp" id="btnWhatsApp">
         <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
@@ -876,15 +882,44 @@
   const btnWhatsApp = document.getElementById('btnWhatsApp');
   const btnReserve = document.getElementById('btnReserve');
   
+  // Elementos del selector de cantidad
+  const decreaseQuantity = document.getElementById('decreaseQuantity');
+  const increaseQuantity = document.getElementById('increaseQuantity');
+  const quantityDisplay = document.getElementById('quantityDisplay');
+  
   // Variables para el producto actual
   let currentProduct = '';
   let currentPrice = '';
   let currentAvailable = 0;
   let currentImageUrl = '';
+  let currentQuantity = 1;
   
   // Configuración base
   const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
   const whatsappNumber = '522481688043'; // Tu número de WhatsApp
+
+  // Función para actualizar la cantidad
+  function updateQuantity(newQuantity) {
+    currentQuantity = newQuantity;
+    quantityDisplay.textContent = currentQuantity;
+    
+    // Actualizar estado de los botones
+    decreaseQuantity.disabled = currentQuantity <= 1;
+    increaseQuantity.disabled = currentQuantity >= currentAvailable;
+  }
+
+  // Event listeners para los botones de cantidad
+  decreaseQuantity.addEventListener('click', () => {
+    if (currentQuantity > 1) {
+      updateQuantity(currentQuantity - 1);
+    }
+  });
+
+  increaseQuantity.addEventListener('click', () => {
+    if (currentQuantity < currentAvailable) {
+      updateQuantity(currentQuantity + 1);
+    }
+  });
 
   // Abrir modal al hacer clic en una tarjeta de producto
   document.querySelectorAll('.card').forEach(card => {
@@ -937,6 +972,9 @@
       currentAvailable = available;
       currentImageUrl = imageUrl;
       
+      // Resetear cantidad a 1
+      updateQuantity(1);
+      
       // Mostrar modal
       productModal.classList.add('active');
     });
@@ -954,49 +992,7 @@
     }
   });
 
- 
-  // Elementos del selector de cantidad
-  const decreaseQuantity = document.getElementById('decreaseQuantity');
-  const increaseQuantity = document.getElementById('increaseQuantity');
-  const quantityInput = document.getElementById('quantity');
-  let currentQuantity = 1;
-
-  // Función para actualizar la cantidad
-  function updateQuantity(value) {
-    currentQuantity = value;
-    quantityInput.value = currentQuantity;
-    
-    // Habilitar o deshabilitar botones según los límites
-    decreaseQuantity.disabled = currentQuantity <= 1;
-    increaseQuantity.disabled = currentQuantity >= currentAvailable;
-  }
-
-  // Event listeners para los botones de cantidad
-  decreaseQuantity.addEventListener('click', () => {
-    if (currentQuantity > 1) {
-      updateQuantity(currentQuantity - 1);
-    }
-  });
-
-  increaseQuantity.addEventListener('click', () => {
-    if (currentQuantity < currentAvailable) {
-      updateQuantity(currentQuantity + 1);
-    }
-  });
-
-  // Al abrir el modal, resetear la cantidad a 1 y actualizar el máximo
-  document.querySelectorAll('.card').forEach(card => {
-    card.addEventListener('click', function() {
-      // ... (código anterior para abrir el modal)
-
-      // Resetear cantidad a 1 y actualizar el máximo según disponibilidad
-      updateQuantity(1);
-      quantityInput.max = currentAvailable;
-      increaseQuantity.disabled = currentAvailable <= 1;
-    });
-  });
-
-  // Modificar los mensajes de WhatsApp para incluir la cantidad
+  // Botón de WhatsApp para comprar
   btnWhatsApp.addEventListener('click', function() {
     const message = `🛍️ *SOLICITUD DE COMPRA - ESSCENCE* 🛍️
 
@@ -1017,6 +1013,7 @@
     window.open(url, '_blank');
   });
 
+  // Botón de WhatsApp para apartar
   btnReserve.addEventListener('click', function() {
     const message = `📋 *SOLICITUD DE APARTADO - ESSCENCE* 📋
 
@@ -1040,10 +1037,3 @@ Agradezco su atención y quedo pendiente de instrucciones. 🙏`;
 
 </body>
 </html>
-
-
-
-
-
-
-
