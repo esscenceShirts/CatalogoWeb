@@ -571,6 +571,57 @@
         margin-bottom: 15px;
       }
     }
+        /* Selector de cantidad */
+    .quantity-selector {
+      margin-bottom: 25px;
+    }
+
+    .quantity-selector label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: clamp(13px, 2.5vw, 15px);
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls button {
+      background: #111;
+      color: white;
+      border: none;
+      width: 35px;
+      height: 35px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .quantity-controls button:hover {
+      background: #333;
+    }
+
+    .quantity-controls button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+
+    #quantity {
+      width: 60px;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      background: #f9f9f9;
+    }
   </style>
 </head>
 <body>
@@ -615,6 +666,15 @@
   <div class="section-title">NUEVO</div>
   <div class="grid">
     <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5">
+          <!-- Selector de cantidad -->
+    <div class="quantity-selector">
+      <label for="quantity">Cantidad:</label>
+      <div class="quantity-controls">
+        <button type="button" id="decreaseQuantity">-</button>
+        <input type="number" id="quantity" value="1" min="1" max="10" readonly>
+        <button type="button" id="increaseQuantity">+</button>
+      </div>
+    </div>
       <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop1.png')"></div>
       <h4>PACK ESSCENCE DROP 01</h4>
       <p>Edición inicial</p>
@@ -894,7 +954,49 @@
     }
   });
 
-  // Botón de WhatsApp para comprar
+ 
+  // Elementos del selector de cantidad
+  const decreaseQuantity = document.getElementById('decreaseQuantity');
+  const increaseQuantity = document.getElementById('increaseQuantity');
+  const quantityInput = document.getElementById('quantity');
+  let currentQuantity = 1;
+
+  // Función para actualizar la cantidad
+  function updateQuantity(value) {
+    currentQuantity = value;
+    quantityInput.value = currentQuantity;
+    
+    // Habilitar o deshabilitar botones según los límites
+    decreaseQuantity.disabled = currentQuantity <= 1;
+    increaseQuantity.disabled = currentQuantity >= currentAvailable;
+  }
+
+  // Event listeners para los botones de cantidad
+  decreaseQuantity.addEventListener('click', () => {
+    if (currentQuantity > 1) {
+      updateQuantity(currentQuantity - 1);
+    }
+  });
+
+  increaseQuantity.addEventListener('click', () => {
+    if (currentQuantity < currentAvailable) {
+      updateQuantity(currentQuantity + 1);
+    }
+  });
+
+  // Al abrir el modal, resetear la cantidad a 1 y actualizar el máximo
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', function() {
+      // ... (código anterior para abrir el modal)
+
+      // Resetear cantidad a 1 y actualizar el máximo según disponibilidad
+      updateQuantity(1);
+      quantityInput.max = currentAvailable;
+      increaseQuantity.disabled = currentAvailable <= 1;
+    });
+  });
+
+  // Modificar los mensajes de WhatsApp para incluir la cantidad
   btnWhatsApp.addEventListener('click', function() {
     const message = `🛍️ *SOLICITUD DE COMPRA - ESSCENCE* 🛍️
 
@@ -902,6 +1004,7 @@
 📋 *Descripción:* ${modalDescription.textContent}
 💰 *Precio:* ${currentPrice}
 📦 *Disponibilidad:* ${currentAvailable} unidades
+🛒 *Cantidad solicitada:* ${currentQuantity}
 
 ¡Hola! Estoy interesado/a en comprar este producto de ESSCENCE. 
 ¿Podrían proporcionarme más información sobre disponibilidad y proceso de compra?
@@ -914,7 +1017,6 @@
     window.open(url, '_blank');
   });
 
-  // Botón de WhatsApp para apartar
   btnReserve.addEventListener('click', function() {
     const message = `📋 *SOLICITUD DE APARTADO - ESSCENCE* 📋
 
@@ -922,6 +1024,7 @@
 📋 *Descripción:* ${modalDescription.textContent}
 💰 *Precio:* ${currentPrice}
 📦 *Disponibilidad:* ${currentAvailable} unidades
+🛒 *Cantidad a apartar:* ${currentQuantity}
 
 ¡Hola! Me gustaría apartar este producto de ESSCENCE.
 ¿Cuál es el proceso y requisitos para apartarlo?
@@ -937,6 +1040,7 @@ Agradezco su atención y quedo pendiente de instrucciones. 🙏`;
 
 </body>
 </html>
+
 
 
 
