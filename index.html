@@ -18,50 +18,33 @@
     body{
       background: #fff;
       color: #111;
-      overflow-x: hidden;
     }
 
-    /* HEADER RESPONSIVO */
     header{
       width: 100%;
-      min-height: 80px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 5%;
+      padding: 0 40px;
       border-bottom: 1px solid #eee;
       position: sticky;
       top: 0;
       background: #fff;
-      z-index: 1000;
-      flex-wrap: wrap;
-    }
-
-    .logo{
-      font-size: clamp(18px, 4vw, 22px);
-      letter-spacing: 3px;
-      font-weight: 600;
-      margin: 10px 0;
+      z-index: 10;
     }
 
     .logo img {
-      height: clamp(45px, 8vw, 65px);
+      height: 65px;
       object-fit: contain;
     }
 
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-    }
-
     nav a{
+      margin-left: 20px;
       text-decoration: none;
       color: #111;
-      font-size: clamp(12px, 3vw, 14px);
+      font-size: 14px;
       position: relative;
-      padding: 5px 0;
     }
 
     nav a::after{
@@ -71,7 +54,7 @@
       background: #111;
       position: absolute;
       left: 0;
-      bottom: 0;
+      bottom: -3px;
       transition: .3s;
     }
 
@@ -79,20 +62,19 @@
       width: 100%;
     }
 
-    /* CARRUSEL RESPONSIVO MEJORADO */
+    /* CARRUSEL */
     .carousel-container {
       width: 100%;
-      max-width: 1400px;
+      max-width: 1280px;
       margin: 0 auto;
       position: relative;
       overflow: hidden;
       border-radius: 15px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
 
     .carousel {
       width: 100%;
-      padding-top: 56.25%; /* Relación 16:9 */
+      padding-top: 56.25%;
       position: relative;
       overflow: hidden;
     }
@@ -120,170 +102,70 @@
       display: block;
     }
 
-    .carousel-text {
-      position: absolute;
-      bottom: 5%;
-      left: 5%;
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      color: white;
-      font-weight: bold;
-      letter-spacing: 2px;
-      background: rgba(0,0,0,0.4);
-      padding: clamp(8px, 2vw, 15px) clamp(15px, 3vw, 25px);
-      z-index: 5;
-      border-radius: 8px;
-      max-width: 90%;
-    }
-
-    /* Indicadores del carrusel */
-    .carousel-indicators {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 5;
-    }
-
-    .indicator {
-      width: clamp(8px, 2vw, 12px);
-      height: clamp(8px, 2vw, 12px);
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .indicator.active {
-      background: white;
-    }
-
-    .prev, .next{
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      padding: clamp(8px, 2vw, 12px) clamp(12px, 2.5vw, 18px);
-      font-size: clamp(18px, 4vw, 24px);
-      cursor: pointer;
-      border-radius: 50%;
-      z-index: 5;
-      transition: all 0.3s ease;
-    }
-
-    .prev{ left: 10px; }
-    .next{ right: 10px; }
-
-    .prev:hover, .next:hover{
-      background: black;
-      transform: translateY(-50%) scale(1.1);
-    }
-
-    /* CATÁLOGO RESPONSIVO */
+    /* CATÁLOGO */
     section{
-      padding: clamp(30px, 5vw, 60px) clamp(15px, 3vw, 40px);
+      padding: 60px 40px;
     }
 
     .section-title{
-      font-size: clamp(18px, 4vw, 24px);
-      margin-bottom: clamp(20px, 4vw, 30px);
+      font-size: 20px;
+      margin-bottom: 30px;
       letter-spacing: 2px;
       text-align: center;
     }
 
     .grid{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: clamp(15px, 3vw, 25px);
-      width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      gap: 25px;
     }
 
     .card{
       border: 1px solid #eee;
-      padding: clamp(12px, 2vw, 20px);
-      transition: all 0.3s ease;
+      padding: 15px;
+      transition: .3s;
       cursor: pointer;
-      border-radius: 8px;
-      background: white;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
     }
 
     .card:hover{
       transform: translateY(-5px);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
     }
 
     .img-box{
       width: 100%;
-      height: clamp(200px, 40vw, 320px);
-      background: #f5f5f5;
+      height: 280px;
+      background: #ddd;
       margin-bottom: 15px;
       background-size: cover;
       background-position: center;
-      border-radius: 6px;
-      flex-shrink: 0;
     }
 
     .card h4{
       font-weight: 500;
-      margin-bottom: 8px;
-      font-size: clamp(16px, 3vw, 18px);
+      margin-bottom: 5px;
     }
 
     .card p{
-      font-size: clamp(13px, 2.5vw, 14px);
+      font-size: 14px;
       color: #555;
-      margin-bottom: 8px;
-      line-height: 1.4;
+      margin-bottom: 5px;
     }
 
     .price{
       font-weight: 600;
-      font-size: clamp(14px, 2.5vw, 16px);
-      margin-top: auto;
-      color: #111;
-    }
-
-    /* Enlace Ver Imagen */
-    .view-image-link {
-      display: inline-block;
-      margin-top: 12px;
-      font-size: clamp(11px, 2vw, 13px);
-      color: #666;
-      text-decoration: none;
-      border: 1px solid #ddd;
-      padding: 6px 12px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
-      background: #f9f9f9;
-      text-align: center;
-      width: fit-content;
-    }
-
-    .view-image-link:hover {
-      background: #eee;
-      color: #333;
-      border-color: #ccc;
-      transform: translateY(-2px);
+      font-size: 15px;
     }
 
     footer{
-      padding: clamp(15px, 3vw, 25px);
+      padding: 20px;
       border-top: 1px solid #eee;
       text-align: center;
-      font-size: clamp(11px, 2.5vw, 13px);
+      font-size: 13px;
       color: #555;
-      margin-top: 20px;
     }
 
-    /* Modal de Producto RESPONSIVO */
+    /* Modal de Producto */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -294,11 +176,10 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 2000;
+      z-index: 1000;
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
-      padding: 15px;
     }
 
     .modal-overlay.active {
@@ -308,16 +189,13 @@
 
     .modal {
       background: white;
-      border-radius: 12px;
-      width: 100%;
-      max-width: min(500px, 95vw);
-      padding: clamp(20px, 4vw, 30px);
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
       position: relative;
       transform: translateY(20px);
       transition: transform 0.3s ease;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      max-height: 90vh;
-      overflow-y: auto;
     }
 
     .modal-overlay.active .modal {
@@ -326,29 +204,18 @@
 
     .close-modal {
       position: absolute;
-      top: 12px;
-      right: 12px;
+      top: 15px;
+      right: 15px;
       background: none;
       border: none;
-      font-size: clamp(20px, 4vw, 28px);
+      font-size: 24px;
       cursor: pointer;
       color: #777;
-      width: 40px;
-      height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      transition: background 0.3s;
-    }
-
-    .close-modal:hover {
-      background: #f5f5f5;
     }
 
     .modal-img {
       width: 100%;
-      height: clamp(180px, 40vw, 250px);
+      height: 200px;
       background: #eee;
       margin-bottom: 20px;
       background-size: cover;
@@ -357,30 +224,27 @@
     }
 
     .modal-title {
-      font-size: clamp(20px, 4vw, 26px);
+      font-size: 22px;
       margin-bottom: 10px;
-      line-height: 1.2;
     }
 
     .modal-description {
       color: #666;
       margin-bottom: 15px;
-      font-size: clamp(14px, 2.5vw, 16px);
-      line-height: 1.4;
+      font-size: 15px;
     }
 
     .modal-price {
       font-weight: 600;
-      font-size: clamp(18px, 3.5vw, 22px);
+      font-size: 20px;
       margin-bottom: 20px;
-      color: #111;
     }
 
     .availability {
       display: flex;
       align-items: center;
-      margin-bottom: 15px;
-      font-size: clamp(13px, 2.5vw, 15px);
+      margin-bottom: 25px;
+      font-size: 14px;
     }
 
     .availability .dot {
@@ -389,7 +253,6 @@
       border-radius: 50%;
       background: #4CAF50;
       margin-right: 8px;
-      flex-shrink: 0;
     }
 
     .availability .low-stock {
@@ -400,68 +263,16 @@
       background: #F44336;
     }
 
-    /* Selector de cantidad */
-    .quantity-selector {
-      margin-bottom: 25px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .quantity-label {
-      font-weight: 500;
-      font-size: clamp(14px, 2.5vw, 16px);
-    }
-
-    .quantity-controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .quantity-btn {
-      width: 35px;
-      height: 35px;
-      border: 1px solid #ddd;
-      background: white;
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    .quantity-btn:hover:not(:disabled) {
-      background: #f5f5f5;
-      border-color: #ccc;
-    }
-
-    .quantity-btn:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .quantity-display {
-      width: 50px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 16px;
-    }
-
     .action-buttons {
       display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 15px;
     }
 
     .btn {
       flex: 1;
-      min-width: 140px;
-      padding: clamp(10px, 2vw, 14px) 0;
+      padding: 12px 0;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       font-weight: 500;
       cursor: pointer;
       transition: all 0.3s ease;
@@ -469,11 +280,10 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
-      font-size: clamp(14px, 2.5vw, 16px);
     }
 
-    .btn-whatsapp {
-      background: #25D366;
+    .btn-instagram {
+      background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
       color: white;
     }
 
@@ -496,135 +306,36 @@
     .btn:hover:not(:disabled) {
       opacity: 0.9;
       transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    /* MEDIA QUERIES MEJORADAS */
-    @media (max-width: 1200px) {
-      .carousel-container {
-        max-width: 95%;
-      }
-      
-      .grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      }
-    }
-
+    /* RESPONSIVO */
     @media (max-width: 768px) {
       header {
-        flex-direction: column;
-        padding: 10px 5%;
+        padding: 0 20px;
       }
       
-      nav {
-        margin-top: 10px;
-        width: 100%;
-        justify-content: center;
-      }
-      
-      nav a {
-        margin: 0 8px;
-      }
-      
-      .carousel-text {
-        left: 50%;
-        transform: translateX(-50%);
-        text-align: center;
-        width: 90%;
+      section {
+        padding: 40px 20px;
       }
       
       .action-buttons {
         flex-direction: column;
       }
-      
-      .btn {
-        min-width: 100%;
-      }
-      
-      .quantity-selector {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
     }
 
     @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
+      header {
+        flex-direction: column;
+        height: auto;
+        padding: 15px 20px;
       }
       
-      .card {
-        padding: 15px;
+      nav {
+        margin-top: 10px;
       }
       
-      .img-box {
-        height: 220px;
-      }
-      
-      .prev, .next {
-        padding: 6px 10px;
-        font-size: 16px;
-      }
-      
-      .carousel-indicators {
-        bottom: 10px;
-      }
-      
-      .modal {
-        padding: 20px 15px;
-      }
-      
-      section {
-        padding: 25px 15px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-      
-      .card h4 {
-        font-size: 16px;
-      }
-      
-      .card p, .price {
-        font-size: 13px;
-      }
-      
-      .modal-title {
-        font-size: 18px;
-      }
-      
-      .modal-description {
-        font-size: 14px;
-      }
-    }
-
-    /* Soporte para orientación landscape en móviles */
-    @media (max-height: 500px) and (orientation: landscape) {
-      .modal {
-        max-height: 80vh;
-        padding: 15px;
-      }
-      
-      .modal-img {
-        height: 120px;
-        margin-bottom: 10px;
-      }
-      
-      .modal-title {
-        font-size: 18px;
-        margin-bottom: 5px;
-      }
-      
-      .modal-description, .modal-price {
-        margin-bottom: 10px;
-      }
-      
-      .availability {
-        margin-bottom: 15px;
+      nav a {
+        margin: 0 8px;
       }
     }
   </style>
@@ -650,18 +361,7 @@
       </div>
       <div class="slide">
         <img class="carousel-img" src="imgCarrusel/DropsWeb1.png" alt="Drop1Esscence">
-        <div class="carousel-text">Primer DROP</div>
       </div>
-    </div>
-    
-    <!-- Botones de navegación -->
-    <button class="prev">‹</button>
-    <button class="next">›</button>
-    
-    <!-- Indicadores -->
-    <div class="carousel-indicators" id="indicators">
-      <div class="indicator active" data-index="0"></div>
-      <div class="indicator" data-index="1"></div>
     </div>
   </div>
 </div>
@@ -674,12 +374,6 @@
       <h4>PACK ESSCENCE DROP 01</h4>
       <p>Edición inicial</p>
       <p class="price">$839.00 MXN</p>
-      <a href="https://esscenceshirts.github.io/CatalogoWeb/imgSeccioNuevo/packDrop1.png" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
     </div>
 
     <div class="card" data-product="TheMarbleAscension" data-description="Nuevo diseño" data-price="$349.00 MXN" data-available="2">
@@ -687,74 +381,6 @@
       <h4>The Marble Ascension</h4>
       <p>Nuevo diseño</p>
       <p class="price">$349.00 MXN</p>
-      <a href="https://esscenceshirts.github.io/CatalogoWeb/imgSeccioNuevo/MockupSolitarioWeb1Themarble.png" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
-    </div>
-  </div>
-</section>
-
-<section id="minimalista">
-  <div class="section-title">MINIMALISTA</div>
-  <div class="grid">
-    <div class="card" data-product="PURE LINE" data-description="Blanco / negro" data-price="$259 MXN" data-available="8">
-      <div class="img-box" style="background-image: url('https://via.placeholder.com/300x400/fff/333?text=PURE+LINE')"></div>
-      <h4>PURE LINE</h4>
-      <p>Blanco / negro</p>
-      <p class="price">$259 MXN</p>
-      <a href="https://via.placeholder.com/300x400/fff/333?text=PURE+LINE" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
-    </div>
-
-    <div class="card" data-product="SOFT GREY" data-description="Edición limpia" data-price="$259 MXN" data-available="3">
-      <div class="img-box" style="background-image: url('https://via.placeholder.com/300x400/eee/333?text=SOFT+GREY')"></div>
-      <h4>SOFT GREY</h4>
-      <p>Edición limpia</p>
-      <p class="price">$259 MXN</p>
-      <a href="https://via.placeholder.com/300x400/eee/333?text=SOFT+GREY" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
-    </div>
-  </div>
-</section>
-
-<section id="urbano">
-  <div class="section-title">URBANO</div>
-  <div class="grid">
-    <div class="card" data-product="CITY VIBES" data-description="Inspiración calle" data-price="$289 MXN" data-available="7">
-      <div class="img-box" style="background-image: url('https://via.placeholder.com/300x400/555/fff?text=CITY+VIBES')"></div>
-      <h4>CITY VIBES</h4>
-      <p>Inspiración calle</p>
-      <p class="price">$289 MXN</p>
-      <a href="https://via.placeholder.com/300x400/555/fff?text=CITY+VIBES" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
-    </div>
-
-    <div class="card" data-product="RAW STREET" data-description="Diseño urbano" data-price="$289 MXN" data-available="0">
-      <div class="img-box" style="background-image: url('https://via.placeholder.com/300x400/222/fff?text=RAW+STREET')"></div>
-      <h4>RAW STREET</h4>
-      <p>Diseño urbano</p>
-      <p class="price">$289 MXN</p>
-      <a href="https://via.placeholder.com/300x400/222/fff?text=RAW+STREET" 
-         target="_blank" 
-         class="view-image-link" 
-         onclick="event.stopPropagation();">
-        Previsualizacion
-      </a>
     </div>
   </div>
 </section>
@@ -772,22 +398,12 @@
       <span id="availabilityText">Disponibles: <span id="availableCount">0</span></span>
     </div>
     
-    <!-- Selector de cantidad -->
-    <div class="quantity-selector">
-      <span class="quantity-label">Cantidad:</span>
-      <div class="quantity-controls">
-        <button class="quantity-btn" id="decreaseQuantity" disabled>-</button>
-        <span class="quantity-display" id="quantityDisplay">1</span>
-        <button class="quantity-btn" id="increaseQuantity">+</button>
-      </div>
-    </div>
-    
     <div class="action-buttons">
-      <button class="btn btn-whatsapp" id="btnWhatsApp">
-        <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
+      <button class="btn btn-instagram" id="btnInstagram">
+        <i class="fab fa-instagram"></i> Pedir por Instagram
       </button>
       <button class="btn btn-reserve" id="btnReserve">
-        <i class="far fa-calendar-check"></i> Apartar
+        <i class="far fa-calendar-check"></i> Apartar por Instagram
       </button>
     </div>
   </div>
@@ -798,78 +414,16 @@
 </footer>
 
 <script>
-  // Variables globales para el carrusel
-  let index = 0;
-  const slides = document.getElementById("slides");
-  const indicators = document.querySelectorAll(".indicator");
-  const totalSlides = document.querySelectorAll(".slide").length;
-  let intervalId;
+  // Variables globales
+  let currentProduct = '';
+  let currentPrice = '';
+  let currentAvailable = 0;
+  let currentImageUrl = '';
+  
+  // Configuración
+  const instagramUrl = 'https://www.instagram.com/tucuenta'; // Cambia por tu Instagram
 
-  // Función para mover al siguiente slide
-  function nextSlide() {
-    index = (index + 1) % totalSlides;
-    updateSlidePosition();
-  }
-
-  // Función para mover al slide anterior
-  function prevSlide() {
-    index = (index - 1 + totalSlides) % totalSlides;
-    updateSlidePosition();
-  }
-
-  // Función para actualizar la posición del slide
-  function updateSlidePosition() {
-    slides.style.transform = `translateX(-${index * 100}%)`;
-    updateIndicators();
-  }
-
-  // Función para actualizar los indicadores
-  function updateIndicators() {
-    indicators.forEach((indicator, i) => {
-      if (i === index) {
-        indicator.classList.add("active");
-      } else {
-        indicator.classList.remove("active");
-      }
-    });
-  }
-
-  // Función para ir a un slide específico
-  function goToSlide(slideIndex) {
-    index = slideIndex;
-    updateSlidePosition();
-    resetInterval();
-  }
-
-  // Función para reiniciar el intervalo automático
-  function resetInterval() {
-    clearInterval(intervalId);
-    intervalId = setInterval(nextSlide, 4000);
-  }
-
-  // Event listeners para los botones del carrusel
-  document.querySelector('.next').addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-  });
-
-  document.querySelector('.prev').addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-  });
-
-  // Event listeners para los indicadores del carrusel
-  indicators.forEach(indicator => {
-    indicator.addEventListener('click', () => {
-      const slideIndex = parseInt(indicator.getAttribute('data-index'));
-      goToSlide(slideIndex);
-    });
-  });
-
-  // Iniciar el intervalo automático del carrusel
-  intervalId = setInterval(nextSlide, 4000);
-
-  // Código para el modal de productos
+  // Elementos del DOM
   const productModal = document.getElementById('productModal');
   const closeModal = document.getElementById('closeModal');
   const modalImage = document.getElementById('modalImage');
@@ -879,73 +433,26 @@
   const availabilityDot = document.getElementById('availabilityDot');
   const availabilityText = document.getElementById('availabilityText');
   const availableCount = document.getElementById('availableCount');
-  const btnWhatsApp = document.getElementById('btnWhatsApp');
+  const btnInstagram = document.getElementById('btnInstagram');
   const btnReserve = document.getElementById('btnReserve');
-  
-  // Elementos del selector de cantidad
-  const decreaseQuantity = document.getElementById('decreaseQuantity');
-  const increaseQuantity = document.getElementById('increaseQuantity');
-  const quantityDisplay = document.getElementById('quantityDisplay');
-  
-  // Variables para el producto actual
-  let currentProduct = '';
-  let currentPrice = '';
-  let currentAvailable = 0;
-  let currentImageUrl = '';
-  let currentQuantity = 1;
-  
-  // Configuración base
-  const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
-  const whatsappNumber = '522481688043'; // Tu número de WhatsApp
 
-  // Función para actualizar la cantidad
-  function updateQuantity(newQuantity) {
-    currentQuantity = newQuantity;
-    quantityDisplay.textContent = currentQuantity;
-    
-    // Actualizar estado de los botones
-    decreaseQuantity.disabled = currentQuantity <= 1;
-    increaseQuantity.disabled = currentQuantity >= currentAvailable;
-  }
-
-  // Event listeners para los botones de cantidad
-  decreaseQuantity.addEventListener('click', () => {
-    if (currentQuantity > 1) {
-      updateQuantity(currentQuantity - 1);
-    }
-  });
-
-  increaseQuantity.addEventListener('click', () => {
-    if (currentQuantity < currentAvailable) {
-      updateQuantity(currentQuantity + 1);
-    }
-  });
-
-  // Abrir modal al hacer clic en una tarjeta de producto
+  // Abrir modal al hacer clic en una tarjeta
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', function() {
       const product = this.getAttribute('data-product');
       const description = this.getAttribute('data-description');
       const price = this.getAttribute('data-price');
       const available = parseInt(this.getAttribute('data-available'));
+      const imageUrl = this.querySelector('.img-box').style.backgroundImage.slice(5, -2);
       
-      // Obtener la ruta de la imagen del fondo
-      const imagePath = this.querySelector('.img-box').style.backgroundImage.slice(5, -2);
-      
-      // Convertir a URL absoluta si es relativa
-      let imageUrl = imagePath;
-      if (!imagePath.startsWith('http')) {
-        imageUrl = baseUrl + imagePath;
-      }
-      
-      // Actualizar modal con la información del producto
+      // Actualizar modal
       modalImage.style.backgroundImage = `url('${imageUrl}')`;
       modalTitle.textContent = product;
       modalDescription.textContent = description;
       modalPrice.textContent = price;
       availableCount.textContent = available;
       
-      // Actualizar indicador de disponibilidad
+      // Actualizar disponibilidad
       if (available > 5) {
         availabilityDot.className = 'dot';
         availabilityText.innerHTML = `Disponibles: <span id="availableCount">${available}</span>`;
@@ -957,23 +464,15 @@
         availabilityText.innerHTML = `Disponibles: <span id="availableCount">${available}</span> (Agotado)`;
       }
       
-      // Habilitar o deshabilitar botones según disponibilidad
-      if (available > 0) {
-        btnWhatsApp.disabled = false;
-        btnReserve.disabled = false;
-      } else {
-        btnWhatsApp.disabled = true;
-        btnReserve.disabled = true;
-      }
+      // Habilitar/deshabilitar botones
+      btnInstagram.disabled = available <= 0;
+      btnReserve.disabled = available <= 0;
       
-      // Guardar información del producto actual
+      // Guardar información actual
       currentProduct = product;
       currentPrice = price;
       currentAvailable = available;
       currentImageUrl = imageUrl;
-      
-      // Resetear cantidad a 1
-      updateQuantity(1);
       
       // Mostrar modal
       productModal.classList.add('active');
@@ -985,53 +484,20 @@
     productModal.classList.remove('active');
   });
   
-  // Cerrar modal al hacer clic fuera del contenido
   productModal.addEventListener('click', function(e) {
     if (e.target === productModal) {
       productModal.classList.remove('active');
     }
   });
 
-  // Botón de WhatsApp para comprar
-  btnWhatsApp.addEventListener('click', function() {
-    const message = `🛍️ *SOLICITUD DE COMPRA - ESSCENCE* 🛍️
-
-✨ *Producto:* ${currentProduct}
-📋 *Descripción:* ${modalDescription.textContent}
-💰 *Precio:* ${currentPrice}
-📦 *Disponibilidad:* ${currentAvailable} unidades
-🛒 *Cantidad solicitada:* ${currentQuantity}
-
-¡Hola! Estoy interesado/a en comprar este producto de ESSCENCE. 
-¿Podrían proporcionarme más información sobre disponibilidad y proceso de compra?
-
-📍 *Imagen del producto:* ${currentImageUrl}
-
-¡Quedo atento/a a su respuesta! 😊`;
-  
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+  // Botón de Instagram para comprar
+  btnInstagram.addEventListener('click', function() {
+    window.open(instagramUrl, '_blank');
   });
 
-  // Botón de WhatsApp para apartar
+  // Botón de Instagram para apartar
   btnReserve.addEventListener('click', function() {
-    const message = `📋 *SOLICITUD DE APARTADO - ESSCENCE* 📋
-
-✨ *Producto:* ${currentProduct}
-📋 *Descripción:* ${modalDescription.textContent}
-💰 *Precio:* ${currentPrice}
-📦 *Disponibilidad:* ${currentAvailable} unidades
-🛒 *Cantidad a apartar:* ${currentQuantity}
-
-¡Hola! Me gustaría apartar este producto de ESSCENCE.
-¿Cuál es el proceso y requisitos para apartarlo?
-
-📍 *Imagen del producto:* ${currentImageUrl}
-
-Agradezco su atención y quedo pendiente de instrucciones. 🙏`;
-  
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+    window.open(instagramUrl, '_blank');
   });
 </script>
 
