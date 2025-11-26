@@ -62,7 +62,7 @@
       width: 100%;
     }
 
-    /* CARRUSEL */
+    /* CARRUSEL PRINCIPAL */
     .carousel-container {
       width: 100%;
       max-width: 1280px;
@@ -213,14 +213,73 @@
       color: #777;
     }
 
-    .modal-img {
+    /* CARRUSEL EN MODAL */
+    .modal-carousel {
       width: 100%;
-      height: 200px;
-      background: #eee;
+      height: 250px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
       margin-bottom: 20px;
+    }
+
+    .modal-slides {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .modal-slide {
+      min-width: 100%;
+      height: 100%;
       background-size: cover;
       background-position: center;
-      border-radius: 8px;
+    }
+
+    .modal-prev, .modal-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 20px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 5;
+      transition: background 0.3s;
+    }
+
+    .modal-prev { left: 10px; }
+    .modal-next { right: 10px; }
+
+    .modal-prev:hover, .modal-next:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .modal-indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .modal-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .modal-indicator.active {
+      background: white;
     }
 
     .modal-title {
@@ -321,6 +380,10 @@
       .action-buttons {
         flex-direction: column;
       }
+      
+      .modal-carousel {
+        height: 200px;
+      }
     }
 
     @media (max-width: 480px) {
@@ -336,6 +399,19 @@
       
       nav a {
         margin: 0 8px;
+      }
+      
+      .modal {
+        padding: 20px;
+      }
+      
+      .modal-carousel {
+        height: 180px;
+      }
+      
+      .modal-prev, .modal-next {
+        padding: 8px 12px;
+        font-size: 18px;
       }
     }
   </style>
@@ -369,14 +445,14 @@
 <section id="nuevo">
   <div class="section-title">NUEVO</div>
   <div class="grid">
-    <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5">
+    <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5" data-images='["imgSeccioNuevo/packDrop1.png", "imgSeccioNuevo/packDrop2.png", "imgSeccioNuevo/packDrop3.png"]'>
       <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop1.png')"></div>
       <h4>PACK ESSCENCE DROP 01</h4>
       <p>Edición inicial</p>
       <p class="price">$839.00 MXN</p>
     </div>
 
-    <div class="card" data-product="TheMarbleAscension" data-description="Nuevo diseño" data-price="$349.00 MXN" data-available="2">
+    <div class="card" data-product="TheMarbleAscension" data-description="Nuevo diseño" data-price="$349.00 MXN" data-available="2" data-images='["imgSeccioNuevo/MockupSolitarioWeb1Themarble.png", "imgSeccioNuevo/TheMarble2.png", "imgSeccioNuevo/TheMarble3.png"]'>
       <div class="img-box" style="background-image: url('imgSeccioNuevo/MockupSolitarioWeb1Themarble.png')"></div>
       <h4>The Marble Ascension</h4>
       <p>Nuevo diseño</p>
@@ -389,7 +465,15 @@
 <div class="modal-overlay" id="productModal">
   <div class="modal">
     <button class="close-modal" id="closeModal">&times;</button>
-    <div class="modal-img" id="modalImage"></div>
+    
+    <!-- Carrusel de imágenes del producto -->
+    <div class="modal-carousel">
+      <div class="modal-slides" id="modalSlides"></div>
+      <button class="modal-prev" id="modalPrev">‹</button>
+      <button class="modal-next" id="modalNext">›</button>
+      <div class="modal-indicators" id="modalIndicators"></div>
+    </div>
+    
     <h3 class="modal-title" id="modalTitle"></h3>
     <p class="modal-description" id="modalDescription"></p>
     <p class="modal-price" id="modalPrice"></p>
@@ -418,15 +502,19 @@
   let currentProduct = '';
   let currentPrice = '';
   let currentAvailable = 0;
-  let currentImageUrl = '';
+  let currentImages = [];
+  let currentImageIndex = 0;
   
   // Configuración
-  const instagramUrl = 'https://www.instagram.com/esscence.mx/'; // Cambia por tu Instagram
+  const instagramUrl = 'https://www.instagram.com/tucuenta'; // Cambia por tu Instagram
 
   // Elementos del DOM
   const productModal = document.getElementById('productModal');
   const closeModal = document.getElementById('closeModal');
-  const modalImage = document.getElementById('modalImage');
+  const modalSlides = document.getElementById('modalSlides');
+  const modalPrev = document.getElementById('modalPrev');
+  const modalNext = document.getElementById('modalNext');
+  const modalIndicators = document.getElementById('modalIndicators');
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
   const modalPrice = document.getElementById('modalPrice');
@@ -436,6 +524,63 @@
   const btnInstagram = document.getElementById('btnInstagram');
   const btnReserve = document.getElementById('btnReserve');
 
+  // Función para actualizar el carrusel del modal
+  function updateModalCarousel(images, baseUrl) {
+    modalSlides.innerHTML = '';
+    modalIndicators.innerHTML = '';
+    
+    images.forEach((image, index) => {
+      // Crear slide
+      const slide = document.createElement('div');
+      slide.className = 'modal-slide';
+      const imageUrl = image.startsWith('http') ? image : baseUrl + image;
+      slide.style.backgroundImage = `url('${imageUrl}')`;
+      modalSlides.appendChild(slide);
+      
+      // Crear indicador
+      const indicator = document.createElement('span');
+      indicator.className = `modal-indicator ${index === 0 ? 'active' : ''}`;
+      indicator.dataset.index = index;
+      indicator.addEventListener('click', () => goToSlide(index));
+      modalIndicators.appendChild(indicator);
+    });
+    
+    // Actualizar estado de los botones
+    currentImageIndex = 0;
+    updateCarouselButtons();
+  }
+
+  // Función para ir a un slide específico
+  function goToSlide(index) {
+    currentImageIndex = index;
+    modalSlides.style.transform = `translateX(-${index * 100}%)`;
+    
+    // Actualizar indicadores
+    document.querySelectorAll('.modal-indicator').forEach((indicator, i) => {
+      indicator.classList.toggle('active', i === index);
+    });
+    
+    updateCarouselButtons();
+  }
+
+  // Función para actualizar estado de los botones del carrusel
+  function updateCarouselButtons() {
+    modalPrev.style.display = currentImages.length > 1 ? 'block' : 'none';
+    modalNext.style.display = currentImages.length > 1 ? 'block' : 'none';
+    modalIndicators.style.display = currentImages.length > 1 ? 'flex' : 'none';
+  }
+
+  // Event listeners para los botones del carrusel
+  modalPrev.addEventListener('click', () => {
+    const newIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
+    goToSlide(newIndex);
+  });
+
+  modalNext.addEventListener('click', () => {
+    const newIndex = (currentImageIndex + 1) % currentImages.length;
+    goToSlide(newIndex);
+  });
+
   // Abrir modal al hacer clic en una tarjeta
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', function() {
@@ -443,10 +588,15 @@
       const description = this.getAttribute('data-description');
       const price = this.getAttribute('data-price');
       const available = parseInt(this.getAttribute('data-available'));
-      const imageUrl = this.querySelector('.img-box').style.backgroundImage.slice(5, -2);
+      const images = JSON.parse(this.getAttribute('data-images'));
       
-      // Actualizar modal
-      modalImage.style.backgroundImage = `url('${imageUrl}')`;
+      // Configuración base
+      const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
+      
+      // Actualizar carrusel del modal
+      updateModalCarousel(images, baseUrl);
+      
+      // Actualizar información del producto
       modalTitle.textContent = product;
       modalDescription.textContent = description;
       modalPrice.textContent = price;
@@ -472,7 +622,7 @@
       currentProduct = product;
       currentPrice = price;
       currentAvailable = available;
-      currentImageUrl = imageUrl;
+      currentImages = images;
       
       // Mostrar modal
       productModal.classList.add('active');
