@@ -161,6 +161,27 @@
       background-position: center;
       border-radius: 4px;
       flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .img-box::after {
+      content: '🔍 Ver imagen completa';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 8px;
+      font-size: 0.8rem;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+
+    .img-box:hover::after {
+      transform: translateY(0);
     }
 
     .card h4{
@@ -256,6 +277,12 @@
       background-position: center;
       border-radius: 8px;
       margin-bottom: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .modal-img:hover {
+      transform: scale(1.02);
     }
 
     .modal-title {
@@ -347,6 +374,119 @@
       transform: translateY(-2px);
     }
 
+    /* Lightbox para imagen completa */
+    .lightbox-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .lightbox-img {
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .lightbox-title {
+      color: white;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+    }
+
+    .close-lightbox {
+      position: absolute;
+      top: -50px;
+      right: 0;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .lightbox-nav:hover {
+      background: rgba(255,255,255,0.3);
+    }
+
+    .lightbox-prev {
+      left: 1rem;
+    }
+
+    .lightbox-next {
+      right: 1rem;
+    }
+
+    .lightbox-indicators {
+      position: absolute;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .lightbox-indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .lightbox-indicator.active {
+      background: white;
+    }
+
     /* RESPONSIVO */
     /* Tablets y pantallas medianas */
     @media (max-width: 1024px) {
@@ -421,6 +561,20 @@
       .modal-img {
         height: 200px;
       }
+
+      .lightbox-nav {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1.2rem;
+      }
+
+      .lightbox-prev {
+        left: 0.5rem;
+      }
+
+      .lightbox-next {
+        right: 0.5rem;
+      }
     }
 
     /* Móviles pequeños */
@@ -476,6 +630,19 @@
       footer {
         padding: 1rem;
         font-size: 0.75rem;
+      }
+
+      .lightbox-nav {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+      }
+
+      .close-lightbox {
+        top: -40px;
+        font-size: 1.5rem;
+        width: 2.5rem;
+        height: 2.5rem;
       }
     }
 
@@ -597,6 +764,20 @@
   </div>
 </div>
 
+<!-- Lightbox para imagen completa -->
+<div class="lightbox-overlay" id="lightboxOverlay">
+  <div class="lightbox-content">
+    <button class="close-lightbox" id="closeLightbox">&times;</button>
+    <img class="lightbox-img" id="lightboxImage" src="" alt="Imagen completa del producto">
+    <h3 class="lightbox-title" id="lightboxTitle"></h3>
+    
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">‹</button>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext">›</button>
+    
+    <div class="lightbox-indicators" id="lightboxIndicators"></div>
+  </div>
+</div>
+
 <footer>
   ESSCENCE © 2025 - Todos los derechos reservados
 </footer>
@@ -619,6 +800,19 @@
   const btnReserve = document.getElementById('btnReserve');
   const mobileMenuBtn = document.getElementById('mobileMenuBtn');
   const mainNav = document.getElementById('mainNav');
+
+  // Lightbox elements
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const closeLightbox = document.getElementById('closeLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxPrev = document.getElementById('lightboxPrev');
+  const lightboxNext = document.getElementById('lightboxNext');
+  const lightboxIndicators = document.getElementById('lightboxIndicators');
+
+  // Variables para el lightbox
+  let currentProductImages = [];
+  let currentLightboxIndex = 0;
 
   // Menú móvil
   mobileMenuBtn.addEventListener('click', function() {
@@ -680,12 +874,84 @@
       btnInstagram.disabled = available <= 0;
       btnReserve.disabled = available <= 0;
       
+      // Guardar información para el lightbox
+      currentProductImages = [image];
+      currentLightboxIndex = 0;
+      
       // Mostrar modal
       productModal.classList.add('active');
       document.body.style.overflow = 'hidden'; // Prevenir scroll del body
     });
   });
   
+  // Abrir lightbox al hacer clic en la imagen del modal
+  modalImg.addEventListener('click', function() {
+    openLightbox(currentLightboxIndex);
+  });
+
+  // Abrir lightbox al hacer clic en las imágenes de los productos
+  document.querySelectorAll('.img-box').forEach((imgBox, index) => {
+    imgBox.addEventListener('click', function(e) {
+      e.stopPropagation(); // Evitar que se abra el modal
+      const card = this.closest('.card');
+      const product = card.getAttribute('data-product');
+      const image = card.getAttribute('data-image');
+      
+      // Configuración base
+      const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
+      
+      // Actualizar información del lightbox
+      currentProductImages = [image];
+      currentLightboxIndex = 0;
+      lightboxImage.src = `${baseUrl}${image}`;
+      lightboxTitle.textContent = product;
+      
+      // Mostrar lightbox
+      lightboxOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    });
+  });
+
+  // Función para abrir el lightbox
+  function openLightbox(index) {
+    const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
+    lightboxImage.src = `${baseUrl}${currentProductImages[index]}`;
+    lightboxTitle.textContent = modalTitle.textContent;
+    
+    // Actualizar indicadores
+    updateLightboxIndicators();
+    
+    // Mostrar lightbox
+    lightboxOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+  }
+
+  // Función para actualizar los indicadores del lightbox
+  function updateLightboxIndicators() {
+    lightboxIndicators.innerHTML = '';
+    
+    currentProductImages.forEach((_, index) => {
+      const indicator = document.createElement('div');
+      indicator.className = `lightbox-indicator ${index === currentLightboxIndex ? 'active' : ''}`;
+      indicator.addEventListener('click', () => {
+        currentLightboxIndex = index;
+        openLightbox(currentLightboxIndex);
+      });
+      lightboxIndicators.appendChild(indicator);
+    });
+  }
+
+  // Navegación del lightbox
+  lightboxPrev.addEventListener('click', function() {
+    currentLightboxIndex = (currentLightboxIndex - 1 + currentProductImages.length) % currentProductImages.length;
+    openLightbox(currentLightboxIndex);
+  });
+
+  lightboxNext.addEventListener('click', function() {
+    currentLightboxIndex = (currentLightboxIndex + 1) % currentProductImages.length;
+    openLightbox(currentLightboxIndex);
+  });
+
   // Cerrar modal
   closeModal.addEventListener('click', function() {
     productModal.classList.remove('active');
@@ -699,11 +965,30 @@
     }
   });
 
-  // Cerrar modal con tecla Escape
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && productModal.classList.contains('active')) {
-      productModal.classList.remove('active');
+  // Cerrar lightbox
+  closeLightbox.addEventListener('click', function() {
+    lightboxOverlay.classList.remove('active');
+    document.body.style.overflow = 'auto'; // Restaurar scroll del body
+  });
+  
+  lightboxOverlay.addEventListener('click', function(e) {
+    if (e.target === lightboxOverlay) {
+      lightboxOverlay.classList.remove('active');
       document.body.style.overflow = 'auto'; // Restaurar scroll del body
+    }
+  });
+
+  // Cerrar modal y lightbox con tecla Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      if (productModal.classList.contains('active')) {
+        productModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
+      if (lightboxOverlay.classList.contains('active')) {
+        lightboxOverlay.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      }
     }
   });
 
@@ -720,3 +1005,4 @@
 
 </body>
 </html>
+
