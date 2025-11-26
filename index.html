@@ -62,49 +62,28 @@
       width: 100%;
     }
 
-    /* CARRUSEL PRINCIPAL */
-    .carousel-container {
+    /* HERO SECTION */
+    .hero {
       width: 100%;
-      max-width: 1280px;
-      margin: 0 auto;
-      position: relative;
-      overflow: hidden;
-      border-radius: 15px;
-    }
-
-    .carousel {
-      width: 100%;
-      padding-top: 56.25%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .slides {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      height: 400px;
+      background: #f5f5f5;
       display: flex;
-      transition: transform 0.6s ease-in-out;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
     }
 
-    .slide {
-      min-width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    .carousel-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
+    .hero img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     /* CATÁLOGO */
     section{
-      padding: 60px 40px;
+      padding: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
 
     .section-title{
@@ -116,7 +95,7 @@
 
     .grid{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
       gap: 25px;
     }
 
@@ -125,6 +104,7 @@
       padding: 15px;
       transition: .3s;
       cursor: pointer;
+      text-align: center;
     }
 
     .card:hover{
@@ -135,7 +115,7 @@
     .img-box{
       width: 100%;
       height: 280px;
-      background: #ddd;
+      background: #f5f5f5;
       margin-bottom: 15px;
       background-size: cover;
       background-position: center;
@@ -163,6 +143,7 @@
       text-align: center;
       font-size: 13px;
       color: #555;
+      margin-top: 40px;
     }
 
     /* Modal de Producto */
@@ -191,8 +172,8 @@
       background: white;
       border-radius: 10px;
       width: 90%;
-      max-width: 500px;
-      padding: 30px;
+      max-width: 400px;
+      padding: 25px;
       position: relative;
       transform: translateY(20px);
       transition: transform 0.3s ease;
@@ -213,89 +194,29 @@
       color: #777;
     }
 
-    /* CARRUSEL EN MODAL */
-    .modal-carousel {
+    .modal-img {
       width: 100%;
       height: 250px;
-      position: relative;
-      overflow: hidden;
+      background-size: cover;
+      background-position: center;
       border-radius: 8px;
       margin-bottom: 20px;
     }
 
-    .modal-slides {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .modal-slide {
-      min-width: 100%;
-      height: 100%;
-      background-size: cover;
-      background-position: center;
-    }
-
-    .modal-prev, .modal-next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0,0,0,0.5);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      font-size: 20px;
-      cursor: pointer;
-      border-radius: 50%;
-      z-index: 5;
-      transition: background 0.3s;
-    }
-
-    .modal-prev { left: 10px; }
-    .modal-next { right: 10px; }
-
-    .modal-prev:hover, .modal-next:hover {
-      background: rgba(0,0,0,0.8);
-    }
-
-    .modal-indicators {
-      position: absolute;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 8px;
-      z-index: 5;
-    }
-
-    .modal-indicator {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .modal-indicator.active {
-      background: white;
-    }
-
     .modal-title {
-      font-size: 22px;
+      font-size: 20px;
       margin-bottom: 10px;
     }
 
     .modal-description {
       color: #666;
       margin-bottom: 15px;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .modal-price {
       font-weight: 600;
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 20px;
     }
 
@@ -339,6 +260,7 @@
       align-items: center;
       justify-content: center;
       gap: 8px;
+      font-size: 14px;
     }
 
     .btn-instagram {
@@ -374,14 +296,18 @@
       }
       
       section {
-        padding: 40px 20px;
+        padding: 30px 20px;
+      }
+      
+      .hero {
+        height: 300px;
       }
       
       .action-buttons {
         flex-direction: column;
       }
       
-      .modal-carousel {
+      .modal-img {
         height: 200px;
       }
     }
@@ -405,13 +331,8 @@
         padding: 20px;
       }
       
-      .modal-carousel {
+      .modal-img {
         height: 180px;
-      }
-      
-      .modal-prev, .modal-next {
-        padding: 8px 12px;
-        font-size: 18px;
       }
     }
   </style>
@@ -429,77 +350,50 @@
   </nav>
 </header>
 
-<div class="carousel-container">
-  <div class="carousel">
-    <div class="slides" id="slides">
-      <div class="slide">
-        <img class="carousel-img" src="imgCarrusel/EsscenceBienvenida1.png" alt="EsscenceBienvenida">
-      </div>
-      <div class="slide">
-        <img class="carousel-img" src="imgCarrusel/DropsWeb1.png" alt="Drop1Esscence">
-      </div>
-    </div>
-  </div>
+<div class="hero">
+  <img src="imgCarrusel/EsscenceBienvenida1.png" alt="Esscence Bienvenida">
 </div>
 
-  <section id="nuevo">
-    <div class="section-title">NUEVO</div>
-
-    <!-- Subsección Paquetes -->
-    <div class="subsection">
-      <h3 class="subsection-title">Paquetes</h3>
-      <div class="carousel-horizontal">
-        <div class="card" data-product="PACK ESSENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5" data-images='["imgSeccioNuevo/packDrop1.png", "imgSeccioNuevo/packDrop2.png", "imgSeccioNuevo/packDrop3.png"]'>
-          <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop1.png')"></div>
-          <h4>PACK ESSCENCE DROP 01</h4>
-          <p>Edición inicial</p>
-          <p class="price">$839.00 MXN</p>
-        </div>
-
-        <!-- Puedes agregar más productos de paquetes aquí -->
-        <div class="card" data-product="PACK ESSENCE DROP 02" data-description="Segunda edición" data-price="$899.00 MXN" data-available="3" data-images='["imgSeccioNuevo/packDrop2.png"]'>
-          <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop2.png')"></div>
-          <h4>PACK ESSCENCE DROP 02</h4>
-          <p>Segunda edición</p>
-          <p class="price">$899.00 MXN</p>
-        </div>
-      </div>
+<section id="nuevo">
+  <div class="section-title">NUEVO</div>
+  
+  <div class="grid">
+    <div class="card" data-product="PACK ESSCENCE DROP 01" data-description="Edición inicial" data-price="$839.00 MXN" data-available="5" data-image="imgSeccioNuevo/packDrop1.png">
+      <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop1.png')"></div>
+      <h4>PACK ESSCENCE DROP 01</h4>
+      <p>Edición inicial</p>
+      <p class="price">$839.00 MXN</p>
     </div>
 
-    <!-- Subsección Individual -->
-    <div class="subsection">
-      <h3 class="subsection-title">Individual</h3>
-      <div class="carousel-horizontal">
-        <div class="card" data-product="TheMarbleAscension" data-description="Nuevo diseño" data-price="$349.00 MXN" data-available="2" data-images='["imgSeccioNuevo/MockupSolitarioWeb1Themarble.png", "imgSeccioNuevo/TheMarble2.png", "imgSeccioNuevo/TheMarble3.png"]'>
-          <div class="img-box" style="background-image: url('imgSeccioNuevo/MockupSolitarioWeb1Themarble.png')"></div>
-          <h4>The Marble Ascension</h4>
-          <p>Nuevo diseño</p>
-          <p class="price">$349.00 MXN</p>
-        </div>
-
-        <!-- Puedes agregar más productos individuales aquí -->
-        <div class="card" data-product="Urban Essence" data-description="Diseño urbano" data-price="$329.00 MXN" data-available="7" data-images='["imgSeccioNuevo/urban1.png"]'>
-          <div class="img-box" style="background-image: url('imgSeccioNuevo/urban1.png')"></div>
-          <h4>Urban Essence</h4>
-          <p>Diseño urbano</p>
-          <p class="price">$329.00 MXN</p>
-        </div>
-      </div>
+    <div class="card" data-product="PACK ESSCENCE DROP 02" data-description="Segunda edición" data-price="$899.00 MXN" data-available="3" data-image="imgSeccioNuevo/packDrop2.png">
+      <div class="img-box" style="background-image: url('imgSeccioNuevo/packDrop2.png')"></div>
+      <h4>PACK ESSCENCE DROP 02</h4>
+      <p>Segunda edición</p>
+      <p class="price">$899.00 MXN</p>
     </div>
-  </section>
+
+    <div class="card" data-product="The Marble Ascension" data-description="Nuevo diseño" data-price="$349.00 MXN" data-available="2" data-image="imgSeccioNuevo/MockupSolitarioWeb1Themarble.png">
+      <div class="img-box" style="background-image: url('imgSeccioNuevo/MockupSolitarioWeb1Themarble.png')"></div>
+      <h4>The Marble Ascension</h4>
+      <p>Nuevo diseño</p>
+      <p class="price">$349.00 MXN</p>
+    </div>
+
+    <div class="card" data-product="Urban Essence" data-description="Diseño urbano" data-price="$329.00 MXN" data-available="7" data-image="imgSeccioNuevo/urban1.png">
+      <div class="img-box" style="background-image: url('imgSeccioNuevo/urban1.png')"></div>
+      <h4>Urban Essence</h4>
+      <p>Diseño urbano</p>
+      <p class="price">$329.00 MXN</p>
+    </div>
+  </div>
+</section>
 
 <!-- Modal para detalles del producto -->
 <div class="modal-overlay" id="productModal">
   <div class="modal">
     <button class="close-modal" id="closeModal">&times;</button>
     
-    <!-- Carrusel de imágenes del producto -->
-    <div class="modal-carousel">
-      <div class="modal-slides" id="modalSlides"></div>
-      <button class="modal-prev" id="modalPrev">‹</button>
-      <button class="modal-next" id="modalNext">›</button>
-      <div class="modal-indicators" id="modalIndicators"></div>
-    </div>
+    <div class="modal-img" id="modalImg"></div>
     
     <h3 class="modal-title" id="modalTitle"></h3>
     <p class="modal-description" id="modalDescription"></p>
@@ -525,23 +419,13 @@
 </footer>
 
 <script>
-  // Variables globales
-  let currentProduct = '';
-  let currentPrice = '';
-  let currentAvailable = 0;
-  let currentImages = [];
-  let currentImageIndex = 0;
-  
   // Configuración
   const instagramUrl = 'https://www.instagram.com/tucuenta'; // Cambia por tu Instagram
 
   // Elementos del DOM
   const productModal = document.getElementById('productModal');
   const closeModal = document.getElementById('closeModal');
-  const modalSlides = document.getElementById('modalSlides');
-  const modalPrev = document.getElementById('modalPrev');
-  const modalNext = document.getElementById('modalNext');
-  const modalIndicators = document.getElementById('modalIndicators');
+  const modalImg = document.getElementById('modalImg');
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
   const modalPrice = document.getElementById('modalPrice');
@@ -551,63 +435,6 @@
   const btnInstagram = document.getElementById('btnInstagram');
   const btnReserve = document.getElementById('btnReserve');
 
-  // Función para actualizar el carrusel del modal
-  function updateModalCarousel(images, baseUrl) {
-    modalSlides.innerHTML = '';
-    modalIndicators.innerHTML = '';
-    
-    images.forEach((image, index) => {
-      // Crear slide
-      const slide = document.createElement('div');
-      slide.className = 'modal-slide';
-      const imageUrl = image.startsWith('http') ? image : baseUrl + image;
-      slide.style.backgroundImage = `url('${imageUrl}')`;
-      modalSlides.appendChild(slide);
-      
-      // Crear indicador
-      const indicator = document.createElement('span');
-      indicator.className = `modal-indicator ${index === 0 ? 'active' : ''}`;
-      indicator.dataset.index = index;
-      indicator.addEventListener('click', () => goToSlide(index));
-      modalIndicators.appendChild(indicator);
-    });
-    
-    // Actualizar estado de los botones
-    currentImageIndex = 0;
-    updateCarouselButtons();
-  }
-
-  // Función para ir a un slide específico
-  function goToSlide(index) {
-    currentImageIndex = index;
-    modalSlides.style.transform = `translateX(-${index * 100}%)`;
-    
-    // Actualizar indicadores
-    document.querySelectorAll('.modal-indicator').forEach((indicator, i) => {
-      indicator.classList.toggle('active', i === index);
-    });
-    
-    updateCarouselButtons();
-  }
-
-  // Función para actualizar estado de los botones del carrusel
-  function updateCarouselButtons() {
-    modalPrev.style.display = currentImages.length > 1 ? 'block' : 'none';
-    modalNext.style.display = currentImages.length > 1 ? 'block' : 'none';
-    modalIndicators.style.display = currentImages.length > 1 ? 'flex' : 'none';
-  }
-
-  // Event listeners para los botones del carrusel
-  modalPrev.addEventListener('click', () => {
-    const newIndex = (currentImageIndex - 1 + currentImages.length) % currentImages.length;
-    goToSlide(newIndex);
-  });
-
-  modalNext.addEventListener('click', () => {
-    const newIndex = (currentImageIndex + 1) % currentImages.length;
-    goToSlide(newIndex);
-  });
-
   // Abrir modal al hacer clic en una tarjeta
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('click', function() {
@@ -615,15 +442,13 @@
       const description = this.getAttribute('data-description');
       const price = this.getAttribute('data-price');
       const available = parseInt(this.getAttribute('data-available'));
-      const images = JSON.parse(this.getAttribute('data-images'));
+      const image = this.getAttribute('data-image');
       
       // Configuración base
       const baseUrl = 'https://esscenceshirts.github.io/CatalogoWeb/';
       
-      // Actualizar carrusel del modal
-      updateModalCarousel(images, baseUrl);
-      
       // Actualizar información del producto
+      modalImg.style.backgroundImage = `url('${baseUrl}${image}')`;
       modalTitle.textContent = product;
       modalDescription.textContent = description;
       modalPrice.textContent = price;
@@ -644,12 +469,6 @@
       // Habilitar/deshabilitar botones
       btnInstagram.disabled = available <= 0;
       btnReserve.disabled = available <= 0;
-      
-      // Guardar información actual
-      currentProduct = product;
-      currentPrice = price;
-      currentAvailable = available;
-      currentImages = images;
       
       // Mostrar modal
       productModal.classList.add('active');
@@ -680,5 +499,3 @@
 
 </body>
 </html>
-
-
